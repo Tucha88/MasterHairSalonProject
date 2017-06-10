@@ -15,7 +15,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -93,25 +92,18 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
                     public void onTimeSet(TimePicker view, int hourOfDay,
                                           int minute) {
                         String i = hourOfDay + ":" + minute;
-                        TextView textView;
                         if (v.getId() == R.id.start_hour) {
-                            textView = (TextView) v.findViewById(R.id.start_hour);
                             WeekDay weekDay = adapter.getItem(position);
                             weekDay.setStartWork(i);
-                            adapter.removeItem(position);
-                            adapter.addItem(weekDay, position);
-
+                            adapter.updateItem(weekDay, position);
                             adapter.notifyItemChanged(position);
                         } else {
-                            textView = (TextView) v.findViewById(R.id.end_hour);
                             WeekDay weekDay = adapter.getItem(position);
                             weekDay.setEndWork(i);
-                            adapter.removeItem(position);
-                            adapter.addItem(weekDay, position);
+                            adapter.updateItem(weekDay, position);
                             adapter.notifyItemChanged(position);
                         }
 
-//                        textView.setText(i);
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
@@ -119,7 +111,10 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
 
     @Override
     public void onChecked(int position, boolean isChecked) {
-
+        WeekDay weekDay = adapter.getItem(position);
+        weekDay.setActiveDay(isChecked);
+        adapter.updateItem(weekDay, position);
+        adapter.notifyItemChanged(position);
     }
 
     @Override

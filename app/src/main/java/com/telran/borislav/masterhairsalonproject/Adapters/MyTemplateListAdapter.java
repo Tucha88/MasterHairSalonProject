@@ -23,6 +23,7 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
     private final Context context;
     private ArrayList<WeekDay> items = new ArrayList<>();
     private String[] strings;
+    private boolean onBind;
 
 
 
@@ -45,12 +46,9 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
         holder.dayOfWeek.setText(strings[position]);
         holder.templateStarHour.setText(item.getStartWork());
         holder.templateEndHour.setText(item.getEndWork());
-
-//        holder.templateEndHour.setText(item.getEndWork().getHourLight());
-//        holder.templateEndMin.setText(item.getEndWork().getMinuteLight());
-//        holder.templateStarHour.setText(item.getStartWork().getHourLight());
-//        holder.templateStarMin.setText(item.getStartWork().getMinuteLight());
+        onBind = true;
         holder.templateCheckBox.setChecked(item.isActiveDay());
+        onBind = false;
     }
 
     @Override
@@ -155,6 +153,12 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (!onBind) {
+                WeekDay weekDay = getItem(getAdapterPosition());
+                weekDay.setActiveDay(isChecked);
+                updateItem(weekDay, getAdapterPosition());
+                notifyDataSetChanged();
+            }
 
         }
     }
