@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.telran.borislav.masterhairsalonproject.Models.WeekDay;
@@ -61,6 +62,7 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
     }
 
     public WeekDay getItem(int position) {
+
         return items.get(position);
     }
 
@@ -127,9 +129,11 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
 
     public interface ClickListener {
         void onItemClick(int position, View v);
+
+        void onChecked(int position, boolean isChecked);
     }
 
-    class MyViewHolderTemplate extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class MyViewHolderTemplate extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
         TextView templateStarHour, templateEndHour, dayOfWeek;
         CheckBox templateCheckBox;
 
@@ -141,11 +145,17 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
             templateCheckBox = (CheckBox) itemView.findViewById(R.id.template_check_box);
             templateStarHour.setOnClickListener(this);
             templateEndHour.setOnClickListener(this);
+            templateCheckBox.setOnCheckedChangeListener(this);
         }
 
         @Override
         public void onClick(View v) {
             mClickListener.onItemClick(getAdapterPosition(), v);
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
         }
     }
 

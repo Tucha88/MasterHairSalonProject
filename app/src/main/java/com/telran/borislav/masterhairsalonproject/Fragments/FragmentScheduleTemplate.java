@@ -79,7 +79,7 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
 
 
     @Override
-    public void onItemClick(int position, final View v) {
+    public void onItemClick(final int position, final View v) {
         // Get Current Time
         final Calendar c = Calendar.getInstance();
         mHour = c.get(Calendar.HOUR_OF_DAY);
@@ -96,13 +96,30 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
                         TextView textView;
                         if (v.getId() == R.id.start_hour) {
                             textView = (TextView) v.findViewById(R.id.start_hour);
+                            WeekDay weekDay = adapter.getItem(position);
+                            weekDay.setStartWork(i);
+                            adapter.removeItem(position);
+                            adapter.addItem(weekDay, position);
+
+                            adapter.notifyItemChanged(position);
                         } else {
                             textView = (TextView) v.findViewById(R.id.end_hour);
+                            WeekDay weekDay = adapter.getItem(position);
+                            weekDay.setEndWork(i);
+                            adapter.removeItem(position);
+                            adapter.addItem(weekDay, position);
+                            adapter.notifyItemChanged(position);
                         }
-                        textView.setText(i);
+
+//                        textView.setText(i);
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
+    }
+
+    @Override
+    public void onChecked(int position, boolean isChecked) {
+
     }
 
     @Override
