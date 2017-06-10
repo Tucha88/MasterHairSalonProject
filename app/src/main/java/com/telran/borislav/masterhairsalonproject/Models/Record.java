@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 
 public class Record {
-   private LightCalendar calendar;
+    private LightCalendar calendar;
     private LightClock starTime;
     private ArrayList<Services> services;
     private int duration;

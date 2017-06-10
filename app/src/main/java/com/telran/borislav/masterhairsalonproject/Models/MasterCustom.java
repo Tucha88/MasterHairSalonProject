@@ -3,10 +3,11 @@ package com.telran.borislav.masterhairsalonproject.Models;
 import java.util.ArrayList;
 
 /**
- * Created by vadim on 15.03.2017.
+ * Created by Boris on 11.06.2017.
  */
 
-public class Master {
+public class MasterCustom {
+
     private double latitude;
     private double longitude;
     private String placeId;
@@ -15,17 +16,17 @@ public class Master {
     private String password;
     private String name;
     private String lastName;
-    private ArrayList<String> lang;
+    private ArrayList<String> lang = new ArrayList<>();
     private String masterType;
-    private ArrayList<Services> serivce;
+    private ArrayList<Services> serivce = new ArrayList<Services>();
     private String addresses;
-    private AddressMaster addressMaster;
+    private AddressMastrCustrom addressMaster;
 
-
-    public Master() {
+    public MasterCustom() {
     }
 
-    public Master(double latitude, double longitude, String placeId, String email, String phoneNumber, String password, String name, String lastName, ArrayList<String> lang, String masterType, ArrayList<Services> serivce, String addresses, AddressMaster addressMaster) {
+    public MasterCustom(double latitude, double longitude, String placeId, String email, String phoneNumber, String password, String name, String lastName, ArrayList<String> lang, String masterType, ArrayList<Services> serivce, String addresses, AddressMastrCustrom addressMaster) {
+
         this.latitude = latitude;
         this.longitude = longitude;
         this.placeId = placeId;
@@ -41,23 +42,8 @@ public class Master {
         this.addressMaster = addressMaster;
     }
 
-    public AddressMaster getAddressMaster() {
-        return addressMaster;
-    }
-
-    public void setAddressMaster(AddressMaster addressMaster) {
-        this.addressMaster = addressMaster;
-    }
-
-    public void addServise(Services services) {
-        this.serivce.add(services);
-    }
-
-    public void addLang(String s){
-        this.lang.add(s);
-    }
-
     public double getLatitude() {
+
         return latitude;
     }
 
@@ -152,4 +138,13 @@ public class Master {
     public void setAddresses(String addresses) {
         this.addresses = addresses;
     }
+
+    public AddressMastrCustrom getAddressMaster() {
+        return addressMaster;
+    }
+
+    public void setAddressMaster(AddressMastrCustrom addressMaster) {
+        this.addressMaster = addressMaster;
+    }
+
 }

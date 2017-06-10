@@ -7,9 +7,8 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.Response;
-import com.telran.borislav.masterhairsalonproject.Models.Master;
+import com.telran.borislav.masterhairsalonproject.Models.MasterCustom;
 import com.telran.borislav.masterhairsalonproject.Models.Provider;
-import com.telran.borislav.masterhairsalonproject.Models.Token;
 import com.telran.borislav.masterhairsalonproject.Utilitis.Utils;
 
 import java.io.IOException;
@@ -41,10 +40,10 @@ public class GetMyProfileTask extends AsyncTask<Void, Void, String> {
             if (response.code() < 400) {
                 String responseBody = response.body().string();
                 if (!responseBody.isEmpty()) {
-                    Master client = gson.fromJson(responseBody, Master.class);
+                    MasterCustom client = gson.fromJson(responseBody, MasterCustom.class);
                     SharedPreferences sharedPreferences = context.getSharedPreferences(Utils.PROFILE, Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(Utils.MASTER_PROFILE, gson.toJson(client, Master.class));
+                    editor.putString(Utils.MASTER_PROFILE, gson.toJson(client, MasterCustom.class));
                     editor.commit();
 
                 } else {
