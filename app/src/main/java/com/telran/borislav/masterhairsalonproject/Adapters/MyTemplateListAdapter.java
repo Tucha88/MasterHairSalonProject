@@ -128,9 +128,7 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
             super(itemView);
             dayOfWeek = (TextView) itemView.findViewById(R.id.day_of_week_text_view);
             templateStarHour = (TextView) itemView.findViewById(R.id.start_hour);
-            templateStarMin = (TextView) itemView.findViewById(R.id.start_min);
             templateEndHour = (TextView) itemView.findViewById(R.id.end_hour);
-            templateEndMin = (TextView) itemView.findViewById(R.id.end_min);
             templateCheckBox = (CheckBox) itemView.findViewById(R.id.template_check_box);
         }
     }
