@@ -50,7 +50,7 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
     private FragmentTemplateListListener listener;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isSwipedForRefresh = false;
-    private int mYear, mMonth, mDay, mHour, mMinute;
+    private int mHour, mMinute;
 
 
     @Nullable
@@ -65,16 +65,6 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
         myList.setItemAnimator(new DefaultItemAnimator());
         adapter = new MyTemplateListAdapter(getActivity());
         myList.setAdapter(adapter);
-//        Master master = new Gson().fromJson(getActivity().getSharedPreferences(Utils.PROFILE, Context.MODE_PRIVATE).getString(Utils.MASTER_PROFILE, ""), Master.class);
-//        for (WeekDayCustom item : master.getAddressMaster().getWeekTemplate()) {
-//            WeekDay weekDay = new WeekDay();
-//            weekDay.setActiveDay(item.isActiveDay());
-//            weekDay.setStartWork(item.getStartWork().getHourLight() + ":" + item.getStartWork().getMinuteLight());
-//            weekDay.setEndWork(item.getEndWork().getHourLight() + ":" + item.getEndWork().getMinuteLight());
-//            adapter.addItemAtFront(weekDay);
-//        }
-
-
         buildAdapter();
         adapter.setOnItemClickListener(this);
         return view;
@@ -117,13 +107,6 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
         timePickerDialog.show();
     }
 
-    @Override
-    public void onChecked(int position, boolean isChecked) {
-        WeekDay weekDay = adapter.getItem(position);
-        weekDay.setActiveDay(isChecked);
-        adapter.updateItem(weekDay, position);
-        adapter.notifyItemChanged(position);
-    }
 
     @Override
     public void onClick(View v) {

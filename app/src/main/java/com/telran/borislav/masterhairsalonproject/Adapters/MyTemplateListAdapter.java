@@ -115,7 +115,6 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
     }
 
     public void clear() {
-
         notifyItemRangeRemoved(0, items.size());
         items.clear();
 
@@ -127,8 +126,6 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
 
     public interface ClickListener {
         void onItemClick(int position, View v);
-
-        void onChecked(int position, boolean isChecked);
     }
 
     class MyViewHolderTemplate extends RecyclerView.ViewHolder implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
