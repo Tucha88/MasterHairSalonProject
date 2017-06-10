@@ -84,13 +84,13 @@
         <item>60</item>
     </string-array>
     <string-array name="day_of_week_array">
-        <item>monday</item>
-        <item>tuesday</item>
-        <item>wednesday</item>
-        <item>thursday</item>
-        <item>friday</item>
-        <item>saturday</item>
-        <item>sunday</item>
+        <item>mon</item>
+        <item>tue</item>
+        <item>wed</item>
+        <item>thu</item>
+        <item>fri</item>
+        <item>sat</item>
+        <item>sun</item>
     </string-array>
 
 

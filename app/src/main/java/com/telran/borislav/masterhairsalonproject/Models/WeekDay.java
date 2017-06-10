@@ -6,18 +6,39 @@ package com.telran.borislav.masterhairsalonproject.Models;
 
 public class WeekDay {
     private boolean activeDay;
-    private LightClock startWork;
-    private LightClock endWork;
+    private String startWork;
+    private String endWork;
 
     public WeekDay() {
 
     }
 
-    public WeekDay(boolean activeDay, LightClock startWork, LightClock endWork) {
+    public WeekDay(boolean activeDay, String startWork, String endWork) {
         this.activeDay = activeDay;
         this.startWork = startWork;
         this.endWork = endWork;
     }
+
+    public String getStartWork() {
+        return startWork;
+    }
+
+    public void setStartWork(String startWork) {
+        this.startWork = startWork;
+    }
+
+    public String getEndWork() {
+        return endWork;
+    }
+
+    public void setEndWork(String endWork) {
+        this.endWork = endWork;
+    }
+    //    public WeekDay(boolean activeDay, LightClock startWork, LightClock endWork) {
+//        this.activeDay = activeDay;
+//        this.startWork = startWork;
+//        this.endWork = endWork;
+//    }
 
     public boolean isActiveDay() {
         return activeDay;
@@ -27,19 +48,19 @@ public class WeekDay {
         this.activeDay = activeDay;
     }
 
-    public LightClock getStartWork() {
-        return startWork;
-    }
-
-    public void setStartWork(LightClock startWork) {
-        this.startWork = startWork;
-    }
-
-    public LightClock getEndWork() {
-        return endWork;
-    }
-
-    public void setEndWork(LightClock endWork) {
-        this.endWork = endWork;
-    }
+//    public LightClock getStartWork() {
+//        return startWork;
+//    }
+//
+//    public void setStartWork(LightClock startWork) {
+//        this.startWork = startWork;
+//    }
+//
+//    public LightClock getEndWork() {
+//        return endWork;
+//    }
+//
+//    public void setEndWork(LightClock endWork) {
+//        this.endWork = endWork;
+//    }
 }

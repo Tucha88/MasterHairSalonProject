@@ -15,10 +15,9 @@ public class AddressMaster {
     private ArrayList<WeekDay> weekTemplate;
     private TreeMap<String, CalendarDay> timetableMap;
 
-
-
     public AddressMaster() {
     }
+
 
     public AddressMaster(String address, double latitude, double longitude, String placeId, ArrayList<WeekDay> weekTemplate, TreeMap<String, CalendarDay> timetableMap) {
         this.address = address;

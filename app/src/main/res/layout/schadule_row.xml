@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp">
 
     <TextView
         android:id="@+id/day_of_week_text_view"
@@ -10,21 +12,24 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="day of week"
-        android:textSize="18dp" />
+        android:textSize="18dp"
+        android:textColor="#000"/>
 
     <TextView
         android:id="@+id/start_hour"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="star hour" />
+        android:text="star hour"
+        android:textColor="#000"/>
 
     <TextView
         android:id="@+id/start_min"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="start min" />
+        android:text="start min"
+        android:textColor="#000"/>
 
     <TextView
         android:id="@+id/end_hour"
@@ -32,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="end hour"
+        android:textColor="#000"
         />
 
     <TextView
@@ -39,10 +45,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="end min" />
+        android:text="end min"
+        android:textColor="#000"/>
 
     <CheckBox
         android:id="@+id/template_check_box"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="#000"/>
 </LinearLayout>

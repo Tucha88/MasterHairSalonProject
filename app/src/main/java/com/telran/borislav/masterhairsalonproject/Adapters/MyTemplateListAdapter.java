@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.telran.borislav.masterhairsalonproject.Fragments.FragmentScheduleTemplate;
 import com.telran.borislav.masterhairsalonproject.Models.WeekDay;
 import com.telran.borislav.masterhairsalonproject.R;
 
@@ -20,11 +21,14 @@ import java.util.ArrayList;
 public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAdapter.MyViewHolderTemplate> {
     private final Context context;
     private ArrayList<WeekDay> items = new ArrayList<>();
+    private String[] strings;
 
 
     public MyTemplateListAdapter(Context context) {
         this.context = context;
+        strings = this.context.getResources().getStringArray(R.array.day_of_week_array);
     }
+
 
     @Override
     public MyViewHolderTemplate onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -36,10 +40,14 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
     @Override
     public void onBindViewHolder(MyViewHolderTemplate holder, int position) {
         WeekDay item = items.get(position);
-        holder.templateEndHour.setText(item.getEndWork().getHourLight());
-        holder.templateEndMin.setText(item.getEndWork().getMinuteLight());
-        holder.templateStarHour.setText(item.getStartWork().getHourLight());
-        holder.templateStarMin.setText(item.getStartWork().getMinuteLight());
+
+        holder.dayOfWeek.setText(strings[position]);
+        holder.templateStarHour.setText(item.getStartWork());
+        holder.templateEndHour.setText(item.getEndWork());
+//        holder.templateEndHour.setText(item.getEndWork().getHourLight());
+//        holder.templateEndMin.setText(item.getEndWork().getMinuteLight());
+//        holder.templateStarHour.setText(item.getStartWork().getHourLight());
+//        holder.templateStarMin.setText(item.getStartWork().getMinuteLight());
         holder.templateCheckBox.setChecked(item.isActiveDay());
     }
 
@@ -113,11 +121,12 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
     }
 
     class MyViewHolderTemplate extends RecyclerView.ViewHolder {
-        TextView templateStarHour, templateStarMin, templateEndHour, templateEndMin;
+        TextView templateStarHour, templateStarMin, templateEndHour, templateEndMin,dayOfWeek;
         CheckBox templateCheckBox;
 
         public MyViewHolderTemplate(View itemView) {
             super(itemView);
+            dayOfWeek = (TextView) itemView.findViewById(R.id.day_of_week_text_view);
             templateStarHour = (TextView) itemView.findViewById(R.id.start_hour);
             templateStarMin = (TextView) itemView.findViewById(R.id.start_min);
             templateEndHour = (TextView) itemView.findViewById(R.id.end_hour);
