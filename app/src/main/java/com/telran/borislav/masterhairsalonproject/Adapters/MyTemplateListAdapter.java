@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.telran.borislav.masterhairsalonproject.Fragments.FragmentScheduleTemplate;
 import com.telran.borislav.masterhairsalonproject.Models.WeekDay;
 import com.telran.borislav.masterhairsalonproject.R;
 
@@ -19,9 +18,11 @@ import java.util.ArrayList;
  */
 
 public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAdapter.MyViewHolderTemplate> {
+    private static ClickListener mClickListener;
     private final Context context;
     private ArrayList<WeekDay> items = new ArrayList<>();
     private String[] strings;
+
 
 
     public MyTemplateListAdapter(Context context) {
@@ -40,10 +41,10 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
     @Override
     public void onBindViewHolder(MyViewHolderTemplate holder, int position) {
         WeekDay item = items.get(position);
-
         holder.dayOfWeek.setText(strings[position]);
         holder.templateStarHour.setText(item.getStartWork());
         holder.templateEndHour.setText(item.getEndWork());
+
 //        holder.templateEndHour.setText(item.getEndWork().getHourLight());
 //        holder.templateEndMin.setText(item.getEndWork().getMinuteLight());
 //        holder.templateStarHour.setText(item.getStartWork().getHourLight());
@@ -120,8 +121,16 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
 
     }
 
-    class MyViewHolderTemplate extends RecyclerView.ViewHolder {
-        TextView templateStarHour, templateStarMin, templateEndHour, templateEndMin,dayOfWeek;
+    public void setOnItemClickListener(ClickListener clickListener) {
+        mClickListener = clickListener;
+    }
+
+    public interface ClickListener {
+        void onItemClick(int position, View v);
+    }
+
+    class MyViewHolderTemplate extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView templateStarHour, templateEndHour, dayOfWeek;
         CheckBox templateCheckBox;
 
         public MyViewHolderTemplate(View itemView) {
@@ -130,6 +139,13 @@ public class MyTemplateListAdapter extends RecyclerView.Adapter<MyTemplateListAd
             templateStarHour = (TextView) itemView.findViewById(R.id.start_hour);
             templateEndHour = (TextView) itemView.findViewById(R.id.end_hour);
             templateCheckBox = (CheckBox) itemView.findViewById(R.id.template_check_box);
+            templateStarHour.setOnClickListener(this);
+            templateEndHour.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            mClickListener.onItemClick(getAdapterPosition(), v);
         }
     }
 

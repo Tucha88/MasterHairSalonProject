@@ -2,7 +2,6 @@ package com.telran.borislav.masterhairsalonproject.Fragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -29,21 +28,20 @@ import com.telran.borislav.masterhairsalonproject.R;
 import com.telran.borislav.masterhairsalonproject.Utilitis.Utils;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Boris on 09.06.2017.
  */
 
 public class FragmentEditAccountInfo extends Fragment implements View.OnClickListener {
+    public static final String TAG = "ONTAG";
+    private static final String PATH = "/master/update";
     private EditText email, phoneNumber, name, lastName, addresses;
     private Spinner masterType;
     private int position;
     private Master master;
     private Button btnSave;
     private Handler handler;
-    public static final String TAG = "ONTAG";
-    private static final String PATH = "/master/update";
     private onClickListenerFromEditInfo listener;
 
     public void setListener(onClickListenerFromEditInfo listener) {
@@ -134,11 +132,20 @@ public class FragmentEditAccountInfo extends Fragment implements View.OnClickLis
                             return;
                         }
                     } else if (response.code() == 409) {
-                        handler.post(new ErrorRequest(response.message()));
+                        handler.post(new ErrorRequest(response.message() + " "));
                     } else handler.post(new ErrorRequest("Server error!"));
                 }
             });
         }
+    }
+
+    private Master getMasterInfo() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Utils.PROFILE, Context.MODE_PRIVATE);
+        return new Gson().fromJson(sharedPreferences.getString(Utils.MASTER_PROFILE, ""), Master.class);
+    }
+
+    public interface onClickListenerFromEditInfo {
+        void onClickListener();
     }
 
     class ErrorRequest implements Runnable {
@@ -160,17 +167,6 @@ public class FragmentEditAccountInfo extends Fragment implements View.OnClickLis
         public void run() {
 
         }
-    }
-
-
-
-    public interface onClickListenerFromEditInfo {
-        void onClickListener();
-    }
-
-    private Master getMasterInfo(){
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Utils.PROFILE, Context.MODE_PRIVATE);
-        return new Gson().fromJson(sharedPreferences.getString(Utils.MASTER_PROFILE,""),Master.class);
     }
 
 

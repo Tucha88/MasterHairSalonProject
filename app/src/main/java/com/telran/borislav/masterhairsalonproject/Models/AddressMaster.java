@@ -12,14 +12,14 @@ public class AddressMaster {
     private double latitude;
     private double longitude;
     private String placeId;
-    private ArrayList<WeekDay> weekTemplate;
+    private ArrayList<WeekDayCustom> weekTemplate;
     private TreeMap<String, CalendarDay> timetableMap;
 
     public AddressMaster() {
     }
 
 
-    public AddressMaster(String address, double latitude, double longitude, String placeId, ArrayList<WeekDay> weekTemplate, TreeMap<String, CalendarDay> timetableMap) {
+    public AddressMaster(String address, double latitude, double longitude, String placeId, ArrayList<WeekDayCustom> weekTemplate, TreeMap<String, CalendarDay> timetableMap) {
         this.address = address;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -60,11 +60,11 @@ public class AddressMaster {
         this.placeId = placeId;
     }
 
-    public ArrayList<WeekDay> getWeekTemplate() {
+    public ArrayList<WeekDayCustom> getWeekTemplate() {
         return weekTemplate;
     }
 
-    public void setWeekTemplate(ArrayList<WeekDay> weekTemplate) {
+    public void setWeekTemplate(ArrayList<WeekDayCustom> weekTemplate) {
         this.weekTemplate = weekTemplate;
     }
 
