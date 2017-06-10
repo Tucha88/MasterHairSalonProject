@@ -27,6 +27,7 @@ import com.telran.borislav.masterhairsalonproject.Models.Provider;
 import com.telran.borislav.masterhairsalonproject.Models.WeekDay;
 import com.telran.borislav.masterhairsalonproject.Models.WeekDayCustom;
 import com.telran.borislav.masterhairsalonproject.R;
+import com.telran.borislav.masterhairsalonproject.Tasks.GetMyProfileTask;
 import com.telran.borislav.masterhairsalonproject.Utilitis.Utils;
 
 import java.io.IOException;
@@ -38,9 +39,9 @@ import java.util.List;
  * Created by Boris on 09.06.2017.
  */
 
-public class FragmentScheduleTemplate extends Fragment implements MyTemplateListAdapter.ClickListener, View.OnClickListener {
+public class FragmentScheduleTemplate extends Fragment implements MyTemplateListAdapter.ClickListener, View.OnClickListener, GetMyProfileTask.AsyncResponse {
 
-    ArrayList<WeekDayCustom> weekDays = new ArrayList<>();
+    //    private ArrayList<WeekDayCustom> weekDays;
     //   private FrameLayout progressFrame;
     private FloatingActionButton fabAddItem;
     private RecyclerView myList;
@@ -50,7 +51,7 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isSwipedForRefresh = false;
     private int mYear, mMonth, mDay, mHour, mMinute;
-    private WeekDayCustom weekDayCustom = new WeekDayCustom();
+
 
     @Nullable
     @Override
@@ -64,16 +65,23 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
         myList.setItemAnimator(new DefaultItemAnimator());
         adapter = new MyTemplateListAdapter(getActivity());
         myList.setAdapter(adapter);
-        Master master = new Gson().fromJson(getActivity().getSharedPreferences(Utils.PROFILE, Context.MODE_PRIVATE).getString(Utils.MASTER_PROFILE, ""), Master.class);
-        for (WeekDayCustom item : master.getAddressMaster().getWeekTemplate()) {
-            WeekDay weekDay = new WeekDay();
-            weekDay.setActiveDay(item.isActiveDay());
-            weekDay.setStartWork(item.getStartWork().getHourLight() + ":" + item.getStartWork().getMinuteLight());
-            weekDay.setEndWork(item.getEndWork().getHourLight() + ":" + item.getEndWork().getMinuteLight());
-            adapter.addItemAtFront(weekDay);
-        }
+//        Master master = new Gson().fromJson(getActivity().getSharedPreferences(Utils.PROFILE, Context.MODE_PRIVATE).getString(Utils.MASTER_PROFILE, ""), Master.class);
+//        for (WeekDayCustom item : master.getAddressMaster().getWeekTemplate()) {
+//            WeekDay weekDay = new WeekDay();
+//            weekDay.setActiveDay(item.isActiveDay());
+//            weekDay.setStartWork(item.getStartWork().getHourLight() + ":" + item.getStartWork().getMinuteLight());
+//            weekDay.setEndWork(item.getEndWork().getHourLight() + ":" + item.getEndWork().getMinuteLight());
+//            adapter.addItemAtFront(weekDay);
+//        }
+
+
+        buildAdapter();
         adapter.setOnItemClickListener(this);
         return view;
+    }
+
+    private void buildAdapter() {
+        new GetMyProfileTask(this, getActivity().getSharedPreferences(Utils.AUTH, Context.MODE_PRIVATE).getString(Utils.TOKEN, ""), "/master/info", getActivity()).execute();
     }
 
 
@@ -119,13 +127,33 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
 
     @Override
     public void onClick(View v) {
+        WeekDayCustom weekDayCustom = new WeekDayCustom();
         if (v.getId() == R.id.fab_save_template) {
+            ArrayList<WeekDayCustom> weekDays = new ArrayList<>();
             for (int i = 0; i < adapter.getItemCount(); i++) {
                 adapter.getItem(i);
                 weekDays.add(weekDayCustom.nWeekDayCustom(adapter.getItem(i)));
             }
-            new UpdateListTask().execute();
+            new UpdateListTask(weekDays).execute();
         }
+    }
+
+    @Override
+    public void processFinish() {
+        adapter.clear();
+        Master master = new Gson().fromJson(getActivity().getSharedPreferences(Utils.PROFILE, Context.MODE_PRIVATE).getString(Utils.MASTER_PROFILE, ""), Master.class);
+        for (WeekDayCustom item : master.getAddressMaster().getWeekTemplate()) {
+            WeekDay weekDay = new WeekDay();
+            weekDay.setActiveDay(item.isActiveDay());
+            weekDay.setStartWork(item.getStartWork().getHourLight() + ":" + item.getStartWork().getMinuteLight());
+            weekDay.setEndWork(item.getEndWork().getHourLight() + ":" + item.getEndWork().getMinuteLight());
+            adapter.addItemAtFront(weekDay);
+        }
+    }
+
+    @Override
+    public void profileGetError(String s) {
+
     }
 
 
@@ -134,6 +162,11 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
     }
 
     class UpdateListTask extends AsyncTask<Void, Void, String> {
+        private ArrayList<WeekDayCustom> weekDays;
+
+        public UpdateListTask(ArrayList<WeekDayCustom> weekDays) {
+            this.weekDays = weekDays;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -146,7 +179,7 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
 
         @Override
         protected String doInBackground(Void... params) {
-            String result = "Registration ok!";
+            String result = Utils.SERVER_RESPONSE_OK;
             Gson gson = new Gson();
             ArrayList<WeekDayCustom> weekDayCustoms = weekDays;
             TypeToken<List<WeekDayCustom>> typeToken = new TypeToken<List<WeekDayCustom>>() {
@@ -158,7 +191,7 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
                 if (response.code() < 400) {
                     String responseBody = response.body().string();
                     if (!responseBody.isEmpty()) {
-                        result = response.message();
+
                     } else {
                         result = "Server did not answer!";
                     }
@@ -180,9 +213,12 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
         @Override
         protected void onPostExecute(String items) {
             super.onPostExecute(items);
+            if (items.equals(Utils.SERVER_RESPONSE_OK)) {
+                Toast.makeText(getActivity(), "OK", Toast.LENGTH_LONG).show();
+                buildAdapter();
+            }
 //            swipeRefreshLayout.setRefreshing(false);
             isSwipedForRefresh = false;
-            Toast.makeText(getActivity(), items, Toast.LENGTH_LONG).show();
 //            progressFrame.setVisibility(View.GONE);
         }
 
@@ -193,5 +229,7 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
             isSwipedForRefresh = false;
 //            progressFrame.setVisibility(View.GONE);
         }
+
+
     }
 }
