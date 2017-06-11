@@ -40,7 +40,7 @@ public class FragmentEditAccountInfo extends Fragment implements View.OnClickLis
     private Spinner masterType;
     private int position;
     private Master master;
-    private Button btnSave;
+    private Button btnSave, btnBack;
     private Handler handler;
     private onClickListenerFromEditInfo listener;
 
@@ -67,6 +67,8 @@ public class FragmentEditAccountInfo extends Fragment implements View.OnClickLis
         lastName = (EditText) view.findViewById(R.id.input_last_name);
         masterType = (Spinner) view.findViewById(R.id.input_master_type);
         addresses = (EditText) view.findViewById(R.id.input_address);
+        btnBack = (Button) view.findViewById(R.id.frag_edit_my_profile_btn_back);
+        btnBack.setOnClickListener(this);
         master = getMasterInfo();
         loadMasterInfo();
 
@@ -85,7 +87,6 @@ public class FragmentEditAccountInfo extends Fragment implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.frag_btn_save) {
-
 //            adapter.updateContact(master, position);
             getActivity().getSupportFragmentManager().popBackStack();
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Utils.AUTH, getActivity().MODE_PRIVATE);
@@ -103,7 +104,7 @@ public class FragmentEditAccountInfo extends Fragment implements View.OnClickLis
             master.setMasterType(masterType.getSelectedItem().toString());
             AddressMaster addressMaster = master.getAddressMaster();
             addressMaster.setAddress(addresses.getText().toString());
-            master.setAddressMaster(addressMaster);
+            master.setAddresses(addresses.getText().toString());
             String json = new Gson().toJson(master);
             RequestBody body = RequestBody.create(type, json);
             Request request = new Request.Builder()
@@ -136,6 +137,8 @@ public class FragmentEditAccountInfo extends Fragment implements View.OnClickLis
                     } else handler.post(new ErrorRequest("Server error!"));
                 }
             });
+        } else if (v.getId() == R.id.frag_edit_my_profile_btn_back) {
+            getActivity().getSupportFragmentManager().popBackStack();
         }
     }
 
