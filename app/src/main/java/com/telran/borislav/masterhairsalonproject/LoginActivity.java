@@ -44,6 +44,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Tr
         fragmentRegistration.setListener(this);
         transaction = manager.beginTransaction();
         transaction.replace(R.id.fragment_login_registration_container,fragmentRegistration,Utils.REGISTER_FRAGMENT);
+        transaction.addToBackStack(Utils.REGISTER_FRAGMENT);
         transaction.commit();
     }
 

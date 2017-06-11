@@ -2,12 +2,9 @@ package com.telran.borislav.masterhairsalonproject;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +22,7 @@ import com.telran.borislav.masterhairsalonproject.Fragments.FragmentPrivateAccou
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentScheduleTemplate;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentServicesAdd;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentServicesList;
+import com.telran.borislav.masterhairsalonproject.Fragments.FragmentTwoWeekScheduleList;
 import com.telran.borislav.masterhairsalonproject.Models.Master;
 import com.telran.borislav.masterhairsalonproject.Models.Services;
 import com.telran.borislav.masterhairsalonproject.Tasks.GetMyProfileTask;
@@ -32,6 +31,7 @@ import com.telran.borislav.masterhairsalonproject.Utilitis.Utils;
 public class PrivateAccountActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GetMyProfileTask.AsyncResponse, FragmentPrivateAccount.FragmentPrivateAccountListener, FragmentEditAccountInfo.onClickListenerFromEditInfo, FragmentServicesList.ListFragmentListener, FragmentServicesAdd.AddItemFragmentListener {
 
+    FragmentPrivateAccount fragmentPrivateAccount;
     private FragmentManager manager;
     private FragmentTransaction transaction;
     private TextView nameMasterTxt;
@@ -39,8 +39,6 @@ public class PrivateAccountActivity extends AppCompatActivity
     private Toolbar toolbar;
     private boolean isDrawerLocked = false;
     private DrawerLayout drawer;
-    FragmentPrivateAccount fragmentPrivateAccount;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,7 +145,13 @@ public class PrivateAccountActivity extends AppCompatActivity
             transaction.addToBackStack(Utils.SERVICE_LIST);
             transaction.commit();
             getSupportActionBar().setTitle("My services");
-        } else if (id == R.id.nav_comments) {
+        } else if (id == R.id.nav_two_week_schedule) {
+            FragmentTwoWeekScheduleList fragmentTwoWeekScheduleList = new FragmentTwoWeekScheduleList();
+            transaction = manager.beginTransaction();
+            transaction.replace(R.id.content_private_account, fragmentTwoWeekScheduleList, Utils.TWO_WEEK_SCHEDULE_FRAGMENT);
+            transaction.addToBackStack(Utils.TWO_WEEK_SCHEDULE_FRAGMENT);
+            transaction.commit();
+            getSupportActionBar().setTitle("My schedule");
 
         } else if (id == R.id.nav_schedule) {
             FragmentScheduleTemplate fragmentScheduleTemplate = new FragmentScheduleTemplate();

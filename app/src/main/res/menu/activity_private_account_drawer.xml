@@ -15,13 +15,13 @@
             android:icon="@drawable/ic_services"
             android:title="My services" />
         <item
-            android:id="@+id/nav_comments"
+            android:id="@+id/nav_two_week_schedule"
             android:icon="@drawable/ic_comments"
-            android:title="Comments" />
+            android:title="Schedule" />
         <item
             android:id="@+id/nav_schedule"
             android:icon="@drawable/ic_schedule"
-            android:title="Schedule" />
+            android:title="Template" />
         <item
             android:id="@+id/nav_portfolio"
             android:icon="@drawable/ic_portfolio"
