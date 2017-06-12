@@ -17,17 +17,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentEditAccountInfo;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentPrivateAccount;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentScheduleTemplate;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentServicesAdd;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentServicesList;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentTwoWeekScheduleList;
+import com.telran.borislav.masterhairsalonproject.Fragments.FragmentTwoWeekSchedulePageView;
 import com.telran.borislav.masterhairsalonproject.Models.CalendarDayCustom;
 import com.telran.borislav.masterhairsalonproject.Models.Master;
 import com.telran.borislav.masterhairsalonproject.Models.Services;
 import com.telran.borislav.masterhairsalonproject.Tasks.GetMyProfileTask;
 import com.telran.borislav.masterhairsalonproject.Utilitis.Utils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PrivateAccountActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GetMyProfileTask.AsyncResponse, FragmentPrivateAccount.FragmentPrivateAccountListener, FragmentEditAccountInfo.onClickListenerFromEditInfo, FragmentServicesList.ListFragmentListener, FragmentServicesAdd.AddItemFragmentListener, FragmentTwoWeekScheduleList.TwoWeekScheduleListener {
@@ -290,7 +295,20 @@ public class PrivateAccountActivity extends AppCompatActivity
     }
 
     @Override
-    public void onDayClick(CalendarDayCustom calendarDayCustom) {
+    public void onDayClick(CalendarDayCustom calendarDayCustom, ArrayList<CalendarDayCustom> calendarDays, int position) {
+        Bundle bundle = new Bundle();
+        Gson gson = new Gson();
+        TypeToken<List<CalendarDayCustom>> typeToken = new TypeToken<List<CalendarDayCustom>>() {
+        };
 
+        bundle.putString(Utils.CALENDAR_DAY_BUNDLE, gson.toJson(calendarDayCustom, CalendarDayCustom.class));
+        bundle.putString(Utils.CALENDAR_DAYS_BUNDLE, gson.toJson(calendarDays, typeToken.getType()));
+        bundle.putInt(Utils.POSITION, position);
+        FragmentTwoWeekSchedulePageView pageView = new FragmentTwoWeekSchedulePageView();
+        pageView.setArguments(bundle);
+        transaction = manager.beginTransaction();
+        transaction.replace(R.id.content_private_account, pageView, Utils.TWO_WEEK_PAGER_VIEW);
+        transaction.addToBackStack(Utils.TWO_WEEK_PAGER_VIEW);
+        transaction.commit();
     }
 }

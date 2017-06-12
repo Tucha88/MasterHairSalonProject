@@ -16,6 +16,7 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <FrameLayout
+        android:id="@+id/schedule_two_week_progress_frame_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

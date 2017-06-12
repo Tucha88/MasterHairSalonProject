@@ -3,7 +3,6 @@ package com.telran.borislav.masterhairsalonproject.Tasks;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.squareup.okhttp.Response;
@@ -36,7 +35,6 @@ public class GetMyProfileTask extends AsyncTask<Void, Void, String> {
         Gson gson = new Gson();
         try {
             Response response = Provider.getInstance().get(path, token);
-            Log.d("TAG", "doInBackground: " + response.message());
             if (response.code() < 400) {
                 String responseBody = response.body().string();
                 if (!responseBody.isEmpty()) {

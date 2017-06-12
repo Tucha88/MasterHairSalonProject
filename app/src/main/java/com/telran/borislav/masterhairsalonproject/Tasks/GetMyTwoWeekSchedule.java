@@ -25,11 +25,18 @@ public class GetMyTwoWeekSchedule extends AsyncTask<Void, Void, String> {
     private String path;
     private Context context;
 
+
     public GetMyTwoWeekSchedule(ScheduleAsyncResponse delegate, String token, String path, Context context) {
         this.delegate = delegate;
         this.token = token;
         this.path = path;
         this.context = context;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        delegate.processUpdate();
     }
 
     @Override
@@ -79,6 +86,7 @@ public class GetMyTwoWeekSchedule extends AsyncTask<Void, Void, String> {
     public interface ScheduleAsyncResponse {
         void processFinishTwoWeeks();
 
+        void processUpdate();
         void profileGetErrorTwoWeeks(String s);
     }
 }

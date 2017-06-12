@@ -15,6 +15,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -41,13 +42,11 @@ import java.util.List;
 
 public class FragmentScheduleTemplate extends Fragment implements MyTemplateListAdapter.ClickListener, View.OnClickListener, GetMyProfileTask.AsyncResponse {
 
-    //    private ArrayList<WeekDayCustom> weekDays;
-    //   private FrameLayout progressFrame;
+    private FrameLayout progressFrame;
     private FloatingActionButton fabAddItem;
     private RecyclerView myList;
+    private UpdateTempleTask updateTempleTask;
     private MyTemplateListAdapter adapter;
-    private UpdateListTask updateListTask;
-    private FragmentTemplateListListener listener;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isSwipedForRefresh = false;
     private int mHour, mMinute;
@@ -58,6 +57,7 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_schedule_template, container, false);
         fabAddItem = (FloatingActionButton) view.findViewById(R.id.fab_save_template);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_template_list);
         fabAddItem.setOnClickListener(this);
         myList = (RecyclerView) view.findViewById(R.id.recycler_view_template_list);
         myList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -67,6 +67,12 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
         myList.setAdapter(adapter);
         buildAdapter();
         adapter.setOnItemClickListener(this);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                buildAdapter();
+            }
+        });
         return view;
     }
 
@@ -81,6 +87,18 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
         final Calendar c = Calendar.getInstance();
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
+        if (v.getId() == R.id.start_hour) {
+            WeekDay weekDay = adapter.getItem(position);
+            String[] str = weekDay.getStartWork().split(":");
+            mHour = Integer.parseInt(str[0]);
+            mMinute = Integer.parseInt(str[1]);
+        } else {
+            WeekDay weekDay = adapter.getItem(position);
+            String[] str = weekDay.getEndWork().split(":");
+            mHour = Integer.parseInt(str[0]);
+            mMinute = Integer.parseInt(str[1]);
+        }
+
 
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), 1,
@@ -117,12 +135,14 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
                 adapter.getItem(i);
                 weekDays.add(weekDayCustom.nWeekDayCustom(adapter.getItem(i)));
             }
-            new UpdateListTask(weekDays).execute();
+            updateTempleTask = new UpdateTempleTask(weekDays);
+            updateTempleTask.execute();
         }
     }
 
     @Override
     public void processFinish() {
+        swipeRefreshLayout.setRefreshing(false);
         adapter.clear();
         Master master = new Gson().fromJson(getActivity().getSharedPreferences(Utils.PROFILE, Context.MODE_PRIVATE).getString(Utils.MASTER_PROFILE, ""), Master.class);
         for (WeekDayCustom item : master.getAddressMaster().getWeekTemplate()) {
@@ -136,18 +156,16 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
 
     @Override
     public void profileGetError(String s) {
+        Toast.makeText(getActivity(), s, Toast.LENGTH_LONG);
+        swipeRefreshLayout.setRefreshing(false);
 
     }
 
 
-    public interface FragmentTemplateListListener {
-        void itemSelected(WeekDay item);
-    }
-
-    class UpdateListTask extends AsyncTask<Void, Void, String> {
+    class UpdateTempleTask extends AsyncTask<Void, Void, String> {
         private ArrayList<WeekDayCustom> weekDays;
 
-        public UpdateListTask(ArrayList<WeekDayCustom> weekDays) {
+        public UpdateTempleTask(ArrayList<WeekDayCustom> weekDays) {
             this.weekDays = weekDays;
         }
 
@@ -208,7 +226,6 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
         @Override
         protected void onCancelled() {
             super.onCancelled();
-            updateListTask = null;
             isSwipedForRefresh = false;
 //            progressFrame.setVisibility(View.GONE);
         }

@@ -1,7 +1,6 @@
 package com.telran.borislav.masterhairsalonproject.Fragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,7 +23,6 @@ import com.squareup.okhttp.Response;
 import com.telran.borislav.masterhairsalonproject.Adapters.MyServicesListAdapter;
 import com.telran.borislav.masterhairsalonproject.Models.Provider;
 import com.telran.borislav.masterhairsalonproject.Models.Services;
-import com.telran.borislav.masterhairsalonproject.Models.Token;
 import com.telran.borislav.masterhairsalonproject.R;
 import com.telran.borislav.masterhairsalonproject.Utilitis.Utils;
 import com.telran.borislav.masterhairsalonproject.listeners.ItemListTouchListener;
