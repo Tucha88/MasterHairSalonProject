@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -36,7 +37,8 @@ import java.io.IOException;
 public class FragmentEditAccountInfo extends Fragment implements View.OnClickListener {
     public static final String TAG = "ONTAG";
     private static final String PATH = "/master/update";
-    private EditText email, phoneNumber, name, lastName, addresses;
+    private TextView email;
+    private EditText phoneNumber, name, lastName, addresses;
     private Spinner masterType;
     private int position;
     private Master master;
@@ -61,7 +63,7 @@ public class FragmentEditAccountInfo extends Fragment implements View.OnClickLis
         handler = new Handler();
         btnSave = (Button) view.findViewById(R.id.frag_btn_save);
         btnSave.setOnClickListener(this);
-        email = (EditText) view.findViewById(R.id.input_email);
+        email = (TextView) view.findViewById(R.id.input_email);
         phoneNumber = (EditText) view.findViewById(R.id.input_phone_number);
         name = (EditText) view.findViewById(R.id.input_name);
         lastName = (EditText) view.findViewById(R.id.input_last_name);
@@ -93,8 +95,6 @@ public class FragmentEditAccountInfo extends Fragment implements View.OnClickLis
             String token = sharedPreferences.getString(Utils.TOKEN, "");
             Log.d(TAG, "putMasterUpdate: " + token);
             MediaType type = MediaType.parse("application/json; charset=utf-8");
-
-            master.setEmail(email.getText().toString());
             master.setPhoneNumber(phoneNumber.getText().toString());
             master.setName(name.getText().toString());
             master.setLastName(lastName.getText().toString());

@@ -83,7 +83,7 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
         mMinute = c.get(Calendar.MINUTE);
 
         // Launch Time Picker Dialog
-        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(),
+        TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), 1,
                 new TimePickerDialog.OnTimeSetListener() {
 
                     @Override
@@ -103,7 +103,7 @@ public class FragmentScheduleTemplate extends Fragment implements MyTemplateList
                         }
 
                     }
-                }, mHour, mMinute, false);
+                }, mHour, mMinute, true);
         timePickerDialog.show();
     }
 

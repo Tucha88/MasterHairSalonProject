@@ -50,6 +50,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Tr
 
     @Override
     public void goToNextActivity() {
+        manager.popBackStack();
         startActivityForResult(new Intent(this, PrivateAccountActivity.class), 1);
     }
 
