@@ -35,16 +35,18 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:src="@drawable/logo"
-                android:layout_marginRight="20dp"/>
+                android:layout_marginRight="20dp"
+                android:src="@drawable/logo" />
 
             <Button
-                android:layout_gravity="bottom"
                 android:id="@+id/frag_edit_my_profile_btn_logo"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="123dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_gravity="bottom"
                 android:layout_margin="5dp"
+                android:background="@drawable/custombutton_btn_default_holo_light"
                 android:text="Browse"
                 android:textAllCaps="false"
                 android:textSize="18dp" />
@@ -101,9 +103,9 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
+            android:entries="@array/master_type"
             android:hint="Edit master type"
             android:textColor="#000"
-            android:entries="@array/master_type"
             />
 
         <EditText
@@ -119,19 +121,22 @@
 
 
         <LinearLayout
-            android:layout_marginTop="40dp"
-            android:layout_marginBottom="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="40dp"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/frag_edit_my_profile_btn_back"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/custombutton_btn_default_holo_light"
                 android:text="Back"
+
                 android:textAllCaps="false"
                 android:textSize="18sp" />
 
@@ -142,11 +147,14 @@
 
             <Button
                 android:id="@+id/frag_btn_save"
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
+                android:background="@drawable/custombutton_btn_default_holo_light"
                 android:text="Save"
+
                 android:textAllCaps="false"
                 android:textSize="18sp" />
         </LinearLayout>

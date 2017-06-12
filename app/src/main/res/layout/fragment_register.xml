@@ -25,13 +25,15 @@
 
     <Button
         android:id="@+id/next_btn_registration"
-        style="?android:textAppearanceSmall"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="16dp"
+
+        android:background="@drawable/custombutton_btn_default_holo_light"
         android:text="@string/action_sign_in_next"
         android:textStyle="bold" />
 
@@ -48,21 +50,24 @@
             android:orientation="vertical"
            >
 
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
                 <EditText
                     android:id="@+id/input_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
                     android:gravity="center"
                     android:hint="@string/input_name"
                     android:maxLines="1"
-                    android:textColor="#fff"
-                    android:textColorHint="#fff"
+                    android:textColor="#000"
+                    android:textColorHint="#000"
                     android:textSize="18sp"
-
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -75,13 +80,14 @@
                     android:id="@+id/input_last_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
                     android:gravity="center"
                     android:hint="@string/input_last_name"
                     android:maxLines="1"
-                    android:textColor="#fff"
-                    android:textColorHint="#fff"
+                    android:textColor="#000"
+                    android:textColorHint="#000"
                     android:textSize="18sp"
-
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -94,14 +100,15 @@
                     android:id="@+id/input_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
                     android:gravity="center"
                     android:hint="@string/input_email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:textColor="#fff"
-                    android:textColorHint="#fff"
+                    android:textColor="#000"
+                    android:textColorHint="#000"
                     android:textSize="18sp"
-
                     />
 
             </android.support.design.widget.TextInputLayout>
@@ -114,13 +121,14 @@
                     android:id="@+id/input_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
                     android:gravity="center"
                     android:hint="@string/input_phone"
                     android:inputType="phone"
-
                     android:maxLines="1"
-                    android:textColor="#fff"
-                    android:textColorHint="#fff"
+                    android:textColor="#000"
+                    android:textColorHint="#000"
                     android:textSize="18sp" />
 
             </android.support.design.widget.TextInputLayout>
@@ -133,17 +141,18 @@
                     android:id="@+id/input_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
                     android:gravity="center"
                     android:hint="@string/prompt_password"
                     android:imeActionId="@+id/login"
-
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textColor="#fff"
-                    android:textColorHint="#fff"
+                    android:textColor="#000"
+                    android:textColorHint="#000"
                     android:textSize="18sp" />
 
             </android.support.design.widget.TextInputLayout>
@@ -156,6 +165,8 @@
                     android:id="@+id/input_password2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
                     android:gravity="center"
                     android:hint="@string/input_password2"
                     android:imeActionId="@+id/login"
@@ -163,27 +174,28 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:textColor="#fff"
-                    android:textColorHint="#fff"
+                    android:textColor="#000"
+                    android:textColorHint="#000"
                     android:textSize="18sp"
-
                     />
 
             </android.support.design.widget.TextInputLayout>
 
             <RadioGroup
 
+                android:id="@+id/radio_group"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginStart="20dp"
-                android:orientation="vertical"
-                android:id="@+id/radio_group">
+                android:orientation="vertical">
 
                 <RadioButton
                     android:id="@+id/radio_men_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
                     android:text="Only men's hairstyle" />
 
                 <RadioButton
@@ -191,6 +203,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
                     android:layout_marginTop="10dp"
                     android:text="Only women's  hairstyle" />
 
@@ -198,6 +212,8 @@
                     android:id="@+id/radio_all_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
                     android:checked="true"
                     android:text="All kinds of haircuts" />
             </RadioGroup>
@@ -207,6 +223,8 @@
                 android:id="@+id/language_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
                 android:entries="@array/lang"
                 android:spinnerMode="dropdown"
                  />

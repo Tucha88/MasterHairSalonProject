@@ -23,13 +23,14 @@ import com.telran.borislav.masterhairsalonproject.Fragments.FragmentScheduleTemp
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentServicesAdd;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentServicesList;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentTwoWeekScheduleList;
+import com.telran.borislav.masterhairsalonproject.Models.CalendarDayCustom;
 import com.telran.borislav.masterhairsalonproject.Models.Master;
 import com.telran.borislav.masterhairsalonproject.Models.Services;
 import com.telran.borislav.masterhairsalonproject.Tasks.GetMyProfileTask;
 import com.telran.borislav.masterhairsalonproject.Utilitis.Utils;
 
 public class PrivateAccountActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GetMyProfileTask.AsyncResponse, FragmentPrivateAccount.FragmentPrivateAccountListener, FragmentEditAccountInfo.onClickListenerFromEditInfo, FragmentServicesList.ListFragmentListener, FragmentServicesAdd.AddItemFragmentListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GetMyProfileTask.AsyncResponse, FragmentPrivateAccount.FragmentPrivateAccountListener, FragmentEditAccountInfo.onClickListenerFromEditInfo, FragmentServicesList.ListFragmentListener, FragmentServicesAdd.AddItemFragmentListener, FragmentTwoWeekScheduleList.TwoWeekScheduleListener {
 
     FragmentPrivateAccount fragmentPrivateAccount;
     private FragmentManager manager;
@@ -127,17 +128,19 @@ public class PrivateAccountActivity extends AppCompatActivity
         int id = item.getItemId();
         transaction = getSupportFragmentManager().beginTransaction();
         if (id == R.id.nav_personal_account) {
-
+            cleanBackStack();
             transaction.replace(R.id.content_private_account, fragmentPrivateAccount,Utils.PRIVATE_ACCOUNT);
             transaction.addToBackStack(Utils.PRIVATE_ACCOUNT);
             transaction.commit();
             getSupportActionBar().setTitle("Account");
         } else if (id == R.id.nav_my_adress) {
+            cleanBackStack();
             /*transaction.replace(R.id.content_private_account, new FragmentAdressList(), "FRAG_ADRESS_LIST");
             transaction.commit();*/
 //            showAdressListFragment();
 //            getSupportActionBar().setTitle("My adresses");
         } else if (id == R.id.nav_my_servises) {
+            cleanBackStack();
             FragmentServicesList fragmentServicesList = new FragmentServicesList();
             fragmentServicesList.setFragmentListener(this);
             transaction = manager.beginTransaction();
@@ -146,14 +149,16 @@ public class PrivateAccountActivity extends AppCompatActivity
             transaction.commit();
             getSupportActionBar().setTitle("My services");
         } else if (id == R.id.nav_two_week_schedule) {
+            cleanBackStack();
             FragmentTwoWeekScheduleList fragmentTwoWeekScheduleList = new FragmentTwoWeekScheduleList();
             transaction = manager.beginTransaction();
+            fragmentTwoWeekScheduleList.setListener(this);
             transaction.replace(R.id.content_private_account, fragmentTwoWeekScheduleList, Utils.TWO_WEEK_SCHEDULE_FRAGMENT);
             transaction.addToBackStack(Utils.TWO_WEEK_SCHEDULE_FRAGMENT);
             transaction.commit();
             getSupportActionBar().setTitle("My schedule");
-
         } else if (id == R.id.nav_schedule) {
+            cleanBackStack();
             FragmentScheduleTemplate fragmentScheduleTemplate = new FragmentScheduleTemplate();
             transaction = manager.beginTransaction();
             transaction.replace(R.id.content_private_account,fragmentScheduleTemplate,Utils.SCHEDULE_TEMPLATE);
@@ -163,8 +168,11 @@ public class PrivateAccountActivity extends AppCompatActivity
         } else if (id == R.id.nav_portfolio) {
 //            transaction.replace(R.id.content_private_account, new FragmentPortfolio(), "FRAG_PORTFOL");
 //            getSupportActionBar().setTitle("My portfolio");
+//            cleanBackStack();
+
 //            transaction.commit();
         } else if (id == R.id.nav_exit) {
+            cleanBackStack();
             exit();
         }
 
@@ -273,5 +281,16 @@ public class PrivateAccountActivity extends AppCompatActivity
         transaction.replace(R.id.content_private_account,fragmentServicesList,Utils.SERVICE_LIST);
         transaction.addToBackStack(Utils.SERVICE_LIST);
         transaction.commit();
+    }
+
+    private void cleanBackStack() {
+        for (int i = 0; i < manager.getBackStackEntryCount(); i++) {
+            manager.popBackStack();
+        }
+    }
+
+    @Override
+    public void onDayClick(CalendarDayCustom calendarDayCustom) {
+
     }
 }

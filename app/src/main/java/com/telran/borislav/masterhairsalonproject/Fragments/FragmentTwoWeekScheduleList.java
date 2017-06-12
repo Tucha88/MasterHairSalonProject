@@ -37,11 +37,13 @@ public class FragmentTwoWeekScheduleList extends Fragment implements GetMyTwoWee
     private FloatingActionButton fabAddItem;
     private RecyclerView myList;
     private MyTwoWeekListAdapter adapter;
-    private FragmentScheduleTemplate.UpdateListTask updateListTask;
-    private FragmentScheduleTemplate.FragmentTemplateListListener listener;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isSwipedForRefresh = false;
+    private TwoWeekScheduleListener listener;
 
+    public void setListener(TwoWeekScheduleListener listener) {
+        this.listener = listener;
+    }
 
     @Nullable
     @Override
@@ -89,6 +91,12 @@ public class FragmentTwoWeekScheduleList extends Fragment implements GetMyTwoWee
 
     @Override
     public void onItemClick(int position) {
-
+        Toast.makeText(getActivity(), adapter.getItem(position).getMyCalendar(), Toast.LENGTH_LONG).show();
+        listener.onDayClick(adapter.getItem(position));
     }
+
+    public interface TwoWeekScheduleListener {
+        void onDayClick(CalendarDayCustom calendarDayCustom);
+    }
+
 }
