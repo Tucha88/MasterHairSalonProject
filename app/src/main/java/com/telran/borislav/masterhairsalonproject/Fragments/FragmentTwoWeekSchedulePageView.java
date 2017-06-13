@@ -2,12 +2,14 @@ package com.telran.borislav.masterhairsalonproject.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -26,16 +28,17 @@ public class FragmentTwoWeekSchedulePageView extends Fragment {
     private CalendarDayCustom calendarDayCustom;
     private ArrayList<CalendarDayCustom> calendarDays;
     private int position;
-    private ViewPager pager;
-    private FrameLayout frameLayout;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_day_view_pager, container, false);
-        pager = (ViewPager) view.findViewById(R.id.pager);
-        frameLayout = (FrameLayout) view.findViewById(R.id.pager_one);
+        viewPager = (ViewPager) view.findViewById(R.id.pager);
+        tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+
         Gson gson = new Gson();
         if (getArguments() != null || !getArguments().isEmpty()) {
             TypeToken<List<CalendarDayCustom>> typeToken = new TypeToken<List<CalendarDayCustom>>() {
@@ -43,11 +46,57 @@ public class FragmentTwoWeekSchedulePageView extends Fragment {
             calendarDayCustom = gson.fromJson(getArguments().getString(Utils.CALENDAR_DAY_BUNDLE), CalendarDayCustom.class);
             calendarDays = gson.fromJson(getArguments().getString(Utils.CALENDAR_DAYS_BUNDLE), typeToken.getType());
             position = getArguments().getInt(Utils.POSITION);
-            FragmentDayViewPage fragment = new FragmentDayViewPage();
-            getChildFragmentManager().beginTransaction().replace(R.id.pager, fragment, "FRAGMENT").commit();
+
         }
 
+//        getChildFragmentManager().beginTransaction().add(R.id.pager_one, fragment, "FRAGMENT").commit();
 
+        setupViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
         return view;
     }
+
+    private void setupViewPager(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        for (int i = 0; i < calendarDays.size(); i++) {
+            adapter.addFrag(i, calendarDays.get(i));
+        }
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentStatePagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFrag(int position, CalendarDayCustom dayCustom) {
+            FragmentDayViewPage fragment = new FragmentDayViewPage();
+            Bundle bundle = new Bundle();
+            Gson gson = new Gson();
+            bundle.putString(Utils.CALENDAR_DAY_BUNDLE_FOR_DAY_VIEW, gson.toJson(dayCustom, CalendarDayCustom.class));
+            fragment.setArguments(bundle);
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(dayCustom.getMyCalendar());
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
+    }
+
+
 }
