@@ -4,6 +4,10 @@
     android:layout_height="match_parent"
     android:background="@drawable/background">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80ffffff" />
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_schedule_list"
         android:layout_width="match_parent"

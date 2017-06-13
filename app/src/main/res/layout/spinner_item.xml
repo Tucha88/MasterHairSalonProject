@@ -9,7 +9,9 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:text="text"
-        android:textAlignment="gravity" />
+        android:textAlignment="gravity"
+
+        android:textColor="#000" />
 
     <CheckBox
         android:id="@+id/spinner_master_service_checkbox"

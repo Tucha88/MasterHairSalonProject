@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentEditAccountInfo;
+import com.telran.borislav.masterhairsalonproject.Fragments.FragmentFirstMap;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentPrivateAccount;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentScheduleTemplate;
 import com.telran.borislav.masterhairsalonproject.Fragments.FragmentServicesAdd;
@@ -140,10 +141,11 @@ public class PrivateAccountActivity extends AppCompatActivity
             getSupportActionBar().setTitle("Account");
         } else if (id == R.id.nav_my_adress) {
             cleanBackStack();
-            /*transaction.replace(R.id.content_private_account, new FragmentAdressList(), "FRAG_ADRESS_LIST");
-            transaction.commit();*/
-//            showAdressListFragment();
-//            getSupportActionBar().setTitle("My adresses");
+            FragmentFirstMap fragmentFirstMap = new FragmentFirstMap();
+            transaction = manager.beginTransaction();
+            transaction.replace(R.id.content_private_account, fragmentFirstMap, Utils.FRAGMENT_FIRST_MAP);
+            transaction.addToBackStack(Utils.FRAGMENT_FIRST_MAP);
+            transaction.commit();
         } else if (id == R.id.nav_my_servises) {
             cleanBackStack();
             FragmentServicesList fragmentServicesList = new FragmentServicesList();
