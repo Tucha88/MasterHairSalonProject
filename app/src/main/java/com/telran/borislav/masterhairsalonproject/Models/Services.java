@@ -20,6 +20,7 @@ public class Services {
         this.info = info;
     }
 
+
     public String getName() {
         return name;
     }
@@ -51,4 +52,6 @@ public class Services {
     public void setInfo(String info) {
         this.info = info;
     }
+
+
 }

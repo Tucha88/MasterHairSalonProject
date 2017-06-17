@@ -1,4 +1,4 @@
-package com.telran.borislav.masterhairsalonproject.Fragments;
+package com.telran.borislav.masterhairsalonproject.Fragments.MasterFragments;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,11 +26,11 @@ import java.io.IOException;
  */
 
 public class FragmentPrivateAccount extends Fragment implements View.OnClickListener {
+    public static final int REQUEST = 1;
     private TextView nameMaster;
     private TextView lastNameMaster;
     private TextView addressMaster;
     private ImageView fotoMaster;
-    public static final int REQUEST = 1;
     private FragmentPrivateAccountListener listener;
 
     public void setListener(FragmentPrivateAccountListener listener) {

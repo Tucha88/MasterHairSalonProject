@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/client_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="50dp"
+            android:background="#006a65"
+            android:src="@drawable/client" />
+
+        <TextView
+            android:id="@+id/chose_client_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/client_img"
+            android:layout_alignEnd="@+id/client_img"
+            android:layout_alignTop="@+id/chose_master_txt"
+            android:layout_marginEnd="31dp"
+            android:text="Client"
+            android:textColor="#fff" />
+
+
+        <ImageView
+            android:id="@+id/master_img"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/client_img"
+            android:layout_marginEnd="50dp"
+            android:background="#006a65"
+            android:src="@drawable/master" />
+
+        <TextView
+            android:id="@+id/chose_master_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/master_img"
+            android:layout_alignStart="@+id/master_img"
+            android:layout_marginStart="28dp"
+            android:text="Master"
+            android:textColor="#fff" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

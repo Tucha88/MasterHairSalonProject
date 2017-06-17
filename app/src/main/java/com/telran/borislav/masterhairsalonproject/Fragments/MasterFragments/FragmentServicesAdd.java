@@ -1,7 +1,6 @@
-package com.telran.borislav.masterhairsalonproject.Fragments;
+package com.telran.borislav.masterhairsalonproject.Fragments.MasterFragments;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,14 +33,13 @@ public class FragmentServicesAdd extends Fragment {
 
     private AddItemFragmentListener mListener;
 
-    public void setmListener(AddItemFragmentListener mListener) {
-        this.mListener = mListener;
-    }
-
     public FragmentServicesAdd() {
         // Required empty public constructor
     }
 
+    public void setmListener(AddItemFragmentListener mListener) {
+        this.mListener = mListener;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -94,9 +92,9 @@ public class FragmentServicesAdd extends Fragment {
     }
 
     private class AddItemTask extends AsyncTask<Void,Void,String> {
+        private final String path = "/master/service";
         private String name,info;
         private int price,duration;
-        private final String path = "/master/service";
         private Context context;
 
         public AddItemTask(Context context) {

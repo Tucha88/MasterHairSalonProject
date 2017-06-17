@@ -1,4 +1,4 @@
-package com.telran.borislav.masterhairsalonproject.Fragments;
+package com.telran.borislav.masterhairsalonproject.Fragments.MasterFragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -153,6 +153,12 @@ public class FragmentRegistration extends Fragment implements View.OnClickListen
     }
 
 
+    public interface StartMainActivityListener {
+        void startMainActivity();
+
+        void myError(String s);
+    }
+
     public class RegistrationLoginTask extends AsyncTask<Void, Void, String> {
 
         private final String path = "/register/master";
@@ -173,6 +179,11 @@ public class FragmentRegistration extends Fragment implements View.OnClickListen
                         Token token = gson.fromJson(responseBody, Token.class);
                         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Utils.AUTH, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
+                        if (token.isUser()) {
+                            editor.putBoolean(Utils.MASTER_OR_CLIENT, true);
+                        } else {
+                            editor.putBoolean(Utils.MASTER_OR_CLIENT, false);
+                        }
                         editor.putString(Utils.TOKEN, token.getToken());
                         editor.commit();
                     } else {
@@ -205,12 +216,6 @@ public class FragmentRegistration extends Fragment implements View.OnClickListen
             }
         }
 
-    }
-
-    public interface StartMainActivityListener {
-        void startMainActivity();
-
-        void myError(String s);
     }
 
 }

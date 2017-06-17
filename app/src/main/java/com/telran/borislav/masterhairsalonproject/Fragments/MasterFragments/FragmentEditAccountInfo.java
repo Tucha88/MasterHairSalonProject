@@ -1,4 +1,4 @@
-package com.telran.borislav.masterhairsalonproject.Fragments;
+package com.telran.borislav.masterhairsalonproject.Fragments.MasterFragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;

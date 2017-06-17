@@ -86,6 +86,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
 
+    public interface TransactionControllerListener {
+        void goToNextFragment();
+
+        void goToNextActivity();
+
+        void showError(String s);
+    }
+
     public class UserLoginTask extends AsyncTask<Void, Void, String> {
         private final String path = "/login/login";
         private final String mEmail;
@@ -112,6 +120,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Utils.AUTH, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString(Utils.TOKEN, token.getToken());
+                        if (token.isUser()) {
+                            editor.putBoolean(Utils.MASTER_OR_CLIENT, true);
+                        } else {
+                            editor.putBoolean(Utils.MASTER_OR_CLIENT, false);
+                        }
                         editor.commit();
                     } else {
                         result = "Server did not answer!";
@@ -142,11 +155,5 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         }
 
 
-    }
-
-    public interface TransactionControllerListener {
-        void goToNextFragment();
-        void goToNextActivity();
-        void showError(String s);
     }
 }

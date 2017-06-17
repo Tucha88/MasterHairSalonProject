@@ -11,12 +11,12 @@ public class CalendarDayCustom {
     private LightClock startWork;
     private LightClock endWork;
     private boolean working; // рабочий ли день
-    private ArrayList<Record> records;
+    private ArrayList<RecordCustom> records;
 
     public CalendarDayCustom() {
     }
 
-    public CalendarDayCustom(String myCalendar, LightClock startWork, LightClock endWork, boolean working, ArrayList<Record> records) {
+    public CalendarDayCustom(String myCalendar, LightClock startWork, LightClock endWork, boolean working, ArrayList<RecordCustom> records) {
 
         this.myCalendar = myCalendar;
         this.startWork = startWork;
@@ -58,11 +58,11 @@ public class CalendarDayCustom {
         this.working = working;
     }
 
-    public ArrayList<Record> getRecords() {
+    public ArrayList<RecordCustom> getRecords() {
         return records;
     }
 
-    public void setRecords(ArrayList<Record> records) {
+    public void setRecords(ArrayList<RecordCustom> records) {
         this.records = records;
     }
 }

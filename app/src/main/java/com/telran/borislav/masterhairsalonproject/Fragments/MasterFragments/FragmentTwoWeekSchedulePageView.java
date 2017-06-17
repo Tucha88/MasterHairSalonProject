@@ -1,4 +1,4 @@
-package com.telran.borislav.masterhairsalonproject.Fragments;
+package com.telran.borislav.masterhairsalonproject.Fragments.MasterFragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -62,6 +62,7 @@ public class FragmentTwoWeekSchedulePageView extends Fragment {
             adapter.addFrag(i, calendarDays.get(i));
         }
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(position, false);
     }
 
     class ViewPagerAdapter extends FragmentStatePagerAdapter {

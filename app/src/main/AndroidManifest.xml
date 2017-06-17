@@ -35,6 +35,10 @@
             android:name=".PrivateAccountActivity"
             android:label="@string/title_activity_private_account"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".SecondActivity"
+            android:label="@string/title_activity_private_account"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
