@@ -1,12 +1,12 @@
 package com.telran.borislav.masterhairsalonproject;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.gson.Gson;
+import com.telran.borislav.masterhairsalonproject.Fragments.ClientFragments.ChoseServiceFragment;
 import com.telran.borislav.masterhairsalonproject.Fragments.ClientFragments.MapFragment;
 import com.telran.borislav.masterhairsalonproject.Models.Master;
 import com.telran.borislav.masterhairsalonproject.Models.MasterCustom;
@@ -58,11 +60,11 @@ public class SecondActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        manager = getFragmentManager();
+        manager = getSupportFragmentManager();
         MapFragment fragment = new MapFragment();
         fragment.setSelectedMasterListener(this);
         transaction = manager.beginTransaction();
-        transaction.replace(R.id.second_fragment_controller, fragment, "FRAG_MAP");
+        transaction.add(R.id.second_fragment_controller, fragment, "FRAG_MAP");
         transaction.commit();
     }
 
@@ -117,6 +119,7 @@ public class SecondActivity extends AppCompatActivity
             SharedPreferences sharedPreferences = getSharedPreferences("AUTH", MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("TOKEN", "");
+            editor.clear();
             editor.commit();
             sharedPreferences = getSharedPreferences("PERSONAL", MODE_PRIVATE);
             editor = sharedPreferences.edit();
@@ -136,6 +139,7 @@ public class SecondActivity extends AppCompatActivity
         SharedPreferences sharedPreferences = getSharedPreferences(Utils.AUTH, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(Utils.TOKEN, "");
+        editor.clear();
         setResult(RESULT_CANCELED);
         editor.commit();
         finish();
@@ -143,6 +147,17 @@ public class SecondActivity extends AppCompatActivity
 
     @Override
     public void showMaster(MasterCustom master) {
+        Bundle bundle = new Bundle();
+        Gson gson = new Gson();
+        String s = gson.toJson(master, MasterCustom.class);
+        bundle.putString(s, Utils.CHOSE_SERVICE);
+        ChoseServiceFragment choseServiceFragment = new ChoseServiceFragment();
+        transaction = manager.beginTransaction();
+        choseServiceFragment.setArguments(bundle);
+        transaction.replace(R.id.second_fragment_controller, choseServiceFragment, Utils.CHOSE_SERVICE_FRAGMENT);
+        transaction.addToBackStack(Utils.CHOSE_SERVICE_FRAGMENT);
+        transaction.commit();
+
 
     }
 }

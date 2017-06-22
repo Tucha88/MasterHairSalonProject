@@ -194,6 +194,7 @@ public class PrivateAccountActivity extends AppCompatActivity
         SharedPreferences sharedPreferences = getSharedPreferences(Utils.AUTH, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(Utils.TOKEN, "");
+        editor.clear();
         setResult(RESULT_CANCELED);
         editor.commit();
         finish();

@@ -61,6 +61,11 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment.Tr
     }
 
     @Override
+    public void goToClientActivity() {
+        startActivityForResult(new Intent(this, SecondActivity.class), 1);
+    }
+
+    @Override
     public void showError(String s) {
         Toast.makeText(this,s,Toast.LENGTH_LONG).show();
     }

@@ -91,6 +91,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         void goToNextActivity();
 
+        void goToClientActivity();
+
         void showError(String s);
     }
 
@@ -122,8 +124,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                         editor.putString(Utils.TOKEN, token.getToken());
                         if (token.isUser()) {
                             editor.putBoolean(Utils.MASTER_OR_CLIENT, true);
+                            result = "To master";
                         } else {
                             editor.putBoolean(Utils.MASTER_OR_CLIENT, false);
+                            result = "To client";
                         }
                         editor.commit();
                     } else {
@@ -146,8 +150,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         @Override
         protected void onPostExecute(final String success) {
             if (success != null) {
-                if (success.equals("Login ok!")) {
+                if (success.equals("To master")) {
                     listener.goToNextActivity();
+                } else if (success.equals("To client")) {
+                    listener.goToClientActivity();
                 }else {
                     listener.showError(success);
                 }
